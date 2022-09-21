@@ -7,5 +7,11 @@ const schemas = {
     dueDate: Joi.date(),
   }),
 
+  update: Joi.object().keys({
+    title: Joi.string(),
+    description: Joi.string(),
+    dueDate: Joi.date(),
+  }),
+
 };
 module.exports = schemas;
