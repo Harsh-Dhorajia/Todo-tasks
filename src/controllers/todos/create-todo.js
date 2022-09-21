@@ -14,7 +14,7 @@ const createTodo = async (req, res, next) => {
     return res.status(201).send(createdTodo);
   } catch (error) {
     console.log('error :>> ', error);
-    res.status(400).send(error)
+    res.status(500).send(error)
   }
 }
 
