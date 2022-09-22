@@ -4,7 +4,8 @@ const updateTodo = async (req, res, next) => {
   try {
     const { body, params, user } = req;
 
-    if (params.todoId) {
+    console.log(params.todoId);
+    if (!params.todoId) {
       return res.status(400).send({ message: 'Invalid Input' });
     }
 
@@ -16,14 +17,10 @@ const updateTodo = async (req, res, next) => {
       });
     }
 
-    if (todo.createdBy !== user._id) {
-      return res.status(404).send({
-        message: 'You do not have permission',
-      });
-    }
-
     const updatedTodo = await TodoModel.findByIdAndUpdate(todo.id, {
-      ...body
+      $set: {
+        ...body
+      }
     });
     return res.status(200).send(updatedTodo);
   } catch (error) {

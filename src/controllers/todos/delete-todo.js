@@ -4,7 +4,7 @@ const deleteTodo = async (req, res, next) => {
   try {
     const { params, user } = req;
 
-    if (params.todoId) {
+    if (!params.todoId) {
       return res.status(400).send({ message: 'Invalid Input' });
     }
 
@@ -16,14 +16,8 @@ const deleteTodo = async (req, res, next) => {
       });
     }
 
-    if (todo.createdBy !== user._id) {
-      return res.status(404).send({
-        message: 'You do not have permission',
-      });
-    }
-
     const updatedTodo = await TodoModel.findByIdAndDelete(todo.id);
-    return res.status(200).send(updatedTodo);
+    return res.status(200).send({ message: 'Todo Deleted successfully' });
   } catch (error) {
     console.log('Error while TodoUpdate', error);
     return res.status(500).send(error);
