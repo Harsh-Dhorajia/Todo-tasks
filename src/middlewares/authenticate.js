@@ -32,6 +32,12 @@ const auth = async (req, res, next) => {
       });
     }
 
+    if (userData.role !== 'ADMIN') {
+      return res.status(400).send({
+        message: 'User dont have access',
+      });
+    }
+
     // assign user to req object
     req.user = _.pick(userData, ['_id', 'role', 'username']);
     return next();
